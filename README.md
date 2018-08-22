@@ -94,7 +94,7 @@ testFullAPI is used to briefly test major API calls to the library. The expected
 ![testFullAPI expected result](https://github.com/Infineon/Assets/raw/master/Pictures/OPTIGA%20Trust%20X%20testFullAPI.png)
 
 ## Available functions
-Available API is discribed in Wiki of the repository
+Available API is discribed in [Wiki](https://github.com/Infineon/arduino-optiga-trust-x/wiki/Available-functions) of the repository
 	
 ## Contributing
 
