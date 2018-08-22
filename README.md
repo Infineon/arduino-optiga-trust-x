@@ -31,8 +31,7 @@ Shield2GO (link pending) you are using.
 ## Installation
 
 ### Integration of Library
-Please download this repository from GitHub either from the latest [release](https://github.com/Infineon/OPTIGA-Trust-X-Security-Controller/releases) of directly [here](https://github.com/Infineon/OPTIGA-Trust-X-Security-Controller/archive/V1.0.0.zip):
-![Download Library](https://raw.githubusercontent.com/Infineon/assets/master/Pictures/DL_OPTIGA_Trust_X.jpg)
+Please download this repository from GitHub either from the latest [release](https://github.com/Infineon/arduino-optiga-trust-x/releases) of directly [here](https://github.com/Infineon/arduino-optiga-trust-x/archive/v1.0.0.zip)
 
 
 To install the OPTIGA&trade; Trust X library in the Arduino IDE, please go to **Sketch** > **Include Library** > **Add .ZIP Library...** in the Arduino IDE and navigate to the downloaded .ZIP file of this repository. The library will be installed in your Arduino sketch folder in libraries and you can select as well as include this one to your project under **Sketch** > **Include Library** > **OPTIGATrustX**.
