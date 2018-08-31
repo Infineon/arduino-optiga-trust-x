@@ -27,6 +27,7 @@
 
 #include "OPTIGATrustX.h"
 
+#define MAXCMD_LEN		255
 #define CERT_LENGTH		512
 #define RND_LENGTH		64
 #define HASH_LENGTH		32
@@ -38,6 +39,25 @@
 #include "fprint.h"
 
 #define ASSERT(err)   if (ret) { printlnRed("Failed"); while (true); }
+
+/*
+ * Allocating buffers for further use in loop()
+ */
+uint8_t *cert = new uint8_t[CERT_LENGTH];
+uint16_t certLen = CERT_LENGTH;
+uint8_t *rnd = new uint8_t[RND_LENGTH];
+uint16_t rndLen = RND_LENGTH;
+uint8_t *hash = new uint8_t[HASH_LENGTH];
+uint16_t hashLen = HASH_LENGTH;
+uint8_t *rawSign = new uint8_t[SIGN_LENGTH];
+uint8_t *formSign = new uint8_t[SIGN_LENGTH];
+uint16_t signLen = SIGN_LENGTH;
+uint8_t *pubKey = new uint8_t[PUBKEY_LENGTH];
+uint16_t pubKeyLen = PUBKEY_LENGTH;
+uint8_t *uid = new uint8_t[UID_LENGTH];
+  
+
+
 
 static void output_result(char* tag, uint8_t* in, uint16_t in_len)
 {
@@ -54,19 +74,7 @@ void loop()
 {
   uint32_t ret = 0;
   uint8_t  cntr = 10;
-  uint8_t  ifxPublicKey[68];
-  uint8_t  uid[UID_LENGTH];
-  uint8_t  cert[CERT_LENGTH];
-  uint16_t certLen = CERT_LENGTH;
-  uint8_t  rnd[RND_LENGTH];
-  uint16_t rndLen = RND_LENGTH;
-  uint8_t  hash[HASH_LENGTH];
-  uint16_t hashLen = HASH_LENGTH;
-  uint8_t  rawSign[SIGN_LENGTH];
-  uint8_t  formSign[SIGN_LENGTH];
-  uint16_t signLen = SIGN_LENGTH;
-  uint8_t  pubKey[PUBKEY_LENGTH];
-  uint16_t pubKeyLen = PUBKEY_LENGTH;
+  uint8_t ifxPublicKey[68];
 
   /* 
    * Getting co-processor Unique ID
@@ -89,7 +97,8 @@ void loop()
    * Generate a Keypair
    */
   printGreen("Generate Key Pair ... ");
-  ret = trustX.generateKeypair(pubKey, pubKeyLen);
+  uint16_t ctx = 0;
+  ret = trustX.generateKeypair(pubKey, pubKeyLen, ctx);
   ASSERT(ret);
   output_result("Public key", pubKey, pubKeyLen);
 
@@ -111,20 +120,21 @@ void loop()
   output_result("SHA256", hash, hashLen);
 
   /* 
-   * Sign hash with an embedded device key NIST-P256
+   * Generate a signature NIST-P256
    */
   printGreen("Generate Signature ... ");
   ret = trustX.calculateSignature(hash, hashLen, formSign, signLen);
   ASSERT(ret);
-  output_result("Signature", hash, hashLen);
+  output_result("Signature", formSign, signLen);
 
   /* 
    * Verify just geberated signature
    */
-  trustX.getPublicKey(ifxPublicKey);
+  getPublicKey(ifxPublicKey);
    
   printGreen("Verify Signature ... ");
-  ret = trustX.verifySignature(hash, hashLen, formSign, signLen, ifxPublicKey, sizeof(ifxPublicKey));
+  ret = trustX.verifySignature(hash, hashLen, formSign, signLen, ifxPublicKey,
+      sizeof(ifxPublicKey) / sizeof(ifxPublicKey[0]));
   ASSERT(ret);
   printlnGreen("OK");
 
@@ -154,16 +164,16 @@ void setup()
    */
 	printGreen("Begin Trust ... ");
 	ret = trustX.begin();
-  ASSERT(ret);
-  printlnGreen("OK");
+	ASSERT(ret);
+	printlnGreen("OK");
 
   /*
    * Speed up the chip (min is 6ma, maximum is 15ma)
    */
   printGreen("Setting Current Limit... ");
 	ret = trustX.setCurrentLimit(15);
-  ASSERT(ret);
-  printlnGreen("OK");
+	ASSERT(ret);
+	printlnGreen("OK");
 
   /*
    * Check the return value which we just set
@@ -171,13 +181,11 @@ void setup()
   printGreen("Checking Power Limit... ");
   uint8_t current_lim = 0;
   ret = trustX.getCurrentLimit(current_lim);
-  ASSERT(ret); 
-  printlnGreen("OK");
+  ASSERT(ret);
   if (current_lim == 15) {
     printlnGreen("OK");
   } else {
     printlnRed("Failed");
     while(1);
   }
-
 }
