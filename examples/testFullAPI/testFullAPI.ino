@@ -130,7 +130,7 @@ void loop()
   /* 
    * Verify just geberated signature
    */
-  getPublicKey(ifxPublicKey);
+  trustX.getPublicKey(ifxPublicKey);
    
   printGreen("Verify Signature ... ");
   ret = trustX.verifySignature(hash, hashLen, formSign, signLen, ifxPublicKey,
