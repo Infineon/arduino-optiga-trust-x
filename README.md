@@ -31,7 +31,7 @@ Shield2GO (link pending) you are using.
 ## Installation
 
 ### Integration of Library
-Please download this repository from GitHub either from the latest [release](https://github.com/Infineon/OPTIGA-Trust-X-Security-Controller/releases) of directly [here](https://github.com/Infineon/OPTIGA-Trust-X-Security-Controller/archive/V1.0.0.zip):
+Please download this repository from GitHub either from the latest [release](https://github.com/Infineon/arduino-optiga-trust-x/releases) of directly [here](https://github.com/Infineon/arduino-optiga-trust-x/archive/V1.0.3.zip):
 ![Download Library](https://raw.githubusercontent.com/Infineon/assets/master/Pictures/DL_OPTIGA_Trust_X.jpg)
 
 
