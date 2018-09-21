@@ -177,13 +177,24 @@ pal_status_t pal_i2c_write(pal_i2c_t* p_i2c_context,uint8_t* p_data , uint16_t l
 
 		i2c->beginTransmission(p_i2c_context->slave_address);
 		i2c->write(p_data, length);
-		ack = i2c->endTransmission(TRUE);
+		ack = i2c->endTransmission(true);
 
 		if (ack == 0) {
 			upper_layer_handler(p_i2c_context->upper_layer_ctx, PAL_I2C_EVENT_SUCCESS);
 			status = PAL_STATUS_SUCCESS;
+			/*
+			Serial.print("->  ");
+			for(int i = 0; i < length; i++)
+			{
+				Serial.print("0x");
+			    Serial.print(p_data[i], HEX);
+				Serial.print(" ");
+			}
+			Serial.print("\n");
+			*/
 		} else {
 			upper_layer_handler(p_i2c_context->upper_layer_ctx, PAL_I2C_EVENT_ERROR);
+			//Serial.print("~->\n");
 		}
     }while(0);
 
@@ -229,7 +240,7 @@ pal_status_t pal_i2c_read(pal_i2c_t* p_i2c_context , uint8_t* p_data , uint16_t 
     pal_status_t status = PAL_STATUS_FAILURE;
     TwoWire * i2c = NULL;
     uint16_t rx_len = 0;
-    uint16_t 	bytes = 0;
+    int 	 bytes = length;
 
     do {
     	if (p_i2c_context == NULL)
@@ -241,10 +252,11 @@ pal_status_t pal_i2c_read(pal_i2c_t* p_i2c_context , uint8_t* p_data , uint16_t 
     	i2c = (TwoWire *)p_i2c_context->p_i2c_hw_config;
 
 		i2c->beginTransmission(p_i2c_context->slave_address);
-		bytes = i2c->requestFrom((uint16_t)p_i2c_context->slave_address, length);
+		bytes = i2c->requestFrom((int)p_i2c_context->slave_address, bytes);
 
 		if (bytes == 0)
 		{
+			//Serial.print("~<\n");
 			upper_layer_handler(p_i2c_context->upper_layer_ctx, PAL_I2C_EVENT_ERROR);
 			break;
 		}
@@ -259,8 +271,19 @@ pal_status_t pal_i2c_read(pal_i2c_t* p_i2c_context , uint8_t* p_data , uint16_t 
 		{
 			upper_layer_handler(p_i2c_context->upper_layer_ctx, PAL_I2C_EVENT_SUCCESS);
 			status = PAL_STATUS_SUCCESS;
+			/*
+			Serial.print("<-  ");
+			for(int i = 0; i < rx_len; i++)
+			{
+				Serial.print("0x");
+			    Serial.print(p_data[i], HEX);
+				Serial.print(" ");
+			}
+			Serial.print("\n");
+			*/
 		}
 		else {
+			//Serial.print("~<-\n");
 			upper_layer_handler(p_i2c_context->upper_layer_ctx, PAL_I2C_EVENT_ERROR);
 		}
 

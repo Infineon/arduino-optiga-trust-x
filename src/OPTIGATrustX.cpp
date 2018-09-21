@@ -185,7 +185,9 @@ int32_t IFX_OPTIGA_TrustX::begin(TwoWire& CustomWire)
             CmdLib_GetMaxCommsBufferSize();
             ret = 0;
 			active = true;
-        }
+        }else {
+			Serial.print(ret, HEX);
+		}
         
     } while (0);
 
