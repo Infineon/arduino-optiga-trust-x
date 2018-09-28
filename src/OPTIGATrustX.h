@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE
  *
- * Arduino library for OPTIGA™ Trust X.
+ * Arduino library for OPTIGAâ„¢ Trust X.
  */
 
 #ifndef IFXOPTIGATRUST_H_
@@ -205,7 +205,7 @@ public:
      * @retval  0 If function was successful.
      * @retval  1 If the operation failed.
      */
-    int32_t getUniqueID(uint8_t uniqueID[], uint16_t& uidLength) { return getGenericData(eCOPROCESSOR_UID, uniqueID, uidLength); }
+    int32_t getUniqueID(uint8_t uniqueID[], uint16_t& uidLength) { return uidLength != 0?getGenericData(eCOPROCESSOR_UID, uniqueID, uidLength):1; }
 
     /**
      * @brief Get a random number.
@@ -223,7 +223,7 @@ public:
     int32_t getRandom(uint16_t length, uint8_t random[]);
 
     /**
-     * This function returns the current limitation, which holds the maximum value of current allowed to be consumed by the OPTIGA™
+     * This function returns the current limitation, which holds the maximum value of current allowed to be consumed by the OPTIGAâ„¢
      *  Trust X across all operating conditions.
      *
      *  Default value 0x06
@@ -254,7 +254,7 @@ public:
      * @retval  0 If function was successful.
      * @retval  1 If the operation failed.
      */
-    int32_t getLastErrorCodes(uint8_t errorCodes[], uint16_t& errorCodesLength) { return getGenericData(eERROR_CODES, errorCodes, errorCodesLength); }
+    int32_t getLastErrorCodes(uint8_t errorCodes[], uint16_t& errorCodesLength) { return errorCodesLength != 0?getGenericData(eERROR_CODES, errorCodes, errorCodesLength):1; }
 
     /**
      * This function calculates SHA256 hash of the given data.
