@@ -251,7 +251,6 @@ pal_status_t pal_i2c_read(pal_i2c_t* p_i2c_context , uint8_t* p_data , uint16_t 
 
     	i2c = (TwoWire *)p_i2c_context->p_i2c_hw_config;
 
-		i2c->beginTransmission(p_i2c_context->slave_address);
 		bytes = i2c->requestFrom((int)p_i2c_context->slave_address, bytes);
 
 		if (bytes == 0)
