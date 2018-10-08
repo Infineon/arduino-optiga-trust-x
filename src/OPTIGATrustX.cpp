@@ -102,43 +102,42 @@ int32_t IFX_OPTIGA_TrustX::checkChip(void)
 	uint8_t p_sign[69];
 	uint8_t p_unformSign[64];
 	uint16_t slen = 0;
+	uint8_t r_off = 0;
+	uint8_t s_off = 0;
 	
 	do {
 		randomSeed(analogRead(0));
 		
 		for (uint8_t i = 0; i < rlen; i++) {
-			p_rnd[i] = random(0xff);
-			randomSeed(analogRead(0));
+		  p_rnd[i] = random(0xff);
+		  randomSeed(analogRead(0));
 		}
 		
 		err = getCertificate(p_cert, clen);
 		if (err)
-			break;
+		  break;
 		
 		getPublicKey(p_pubkey);
 		
 		err = calculateSignature(p_rnd, rlen, p_sign, slen);
 		if (err)
-			break;
+		  break;
 		
-		if (p_sign[1] == 0x21) {
-		  memcpy(p_unformSign, &p_sign[3], LENGTH_RS_VECTOR/2);
-		  if (p_sign[(LENGTH_RS_VECTOR/2) + 5] == 0x21) {
-			memcpy(&p_unformSign[LENGTH_RS_VECTOR/2], &p_sign[(LENGTH_RS_VECTOR/2) + 6], LENGTH_RS_VECTOR/2);
-		  } else {
-			memcpy(&p_unformSign[LENGTH_RS_VECTOR/2], &p_sign[(LENGTH_RS_VECTOR/2) + 5], LENGTH_RS_VECTOR/2);
-		  }
-		} else {
-		  memcpy(p_unformSign, &p_sign[2], LENGTH_RS_VECTOR/2);
-		  if (p_sign[(LENGTH_RS_VECTOR/2) + 3] == 0x21) {
-			memcpy(&p_unformSign[LENGTH_RS_VECTOR/2], &p_sign[(LENGTH_RS_VECTOR/2) + 5], LENGTH_RS_VECTOR/2);
-		  } else {
-			memcpy(&p_unformSign[LENGTH_RS_VECTOR/2], &p_sign[(LENGTH_RS_VECTOR/2) + 4], LENGTH_RS_VECTOR/2);
-		  }
-		}
+		// Checking the size of r,s components withing the signature
+		// It is represented as follows
+		// R: 0x02 0x21 0x00 0xXX or 0x02 0x20 0xXX
+		// L: 0x02 0x21 0x00 0xXX or 0x02 0x20 0xXX
+		if (p_sign[1] == 0x21) { r_off = 3; } 
+		else                   { r_off = 2; }
+		
+		if (p_sign[r_off + (LENGTH_RS_VECTOR/2) + 1] == 0x21) { s_off = r_off + (LENGTH_RS_VECTOR/2) + 3; }
+		else                                                  { s_off = r_off + (LENGTH_RS_VECTOR/2) + 2; }
+		
+		memcpy(p_unformSign, &p_sign[r_off], LENGTH_RS_VECTOR/2);
+		memcpy(&p_unformSign[LENGTH_RS_VECTOR/2], &p_sign[s_off], LENGTH_RS_VECTOR/2);
 		
 		if (uECC_verify(p_pubkey+4, p_rnd, rlen, p_unformSign, uECC_secp256r1())) {
-			err = 0;
+		  err = 0;
 		}
 	} while(0);
 	
