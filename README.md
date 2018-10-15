@@ -26,7 +26,7 @@ Each device is shipped with a unique elliptic-curve keypair and a corresponding 
 
 ## Hardware
 The wiring to your arduino board depends on the [evaluation board](https://www.infineon.com/cms/en/product/evaluation-boards/optiga-trust-x-eval-kit/) or the 
-Shield2GO (link pending) you are using.
+[Shield2GO](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/) you are using.
 
 ## Installation
 
