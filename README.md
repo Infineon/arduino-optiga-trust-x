@@ -75,6 +75,65 @@ For the verification three methods are available:
 2) with Object ID pointing to the memory slot where the public key is located, 
 3) if neither Object ID nor raw public key were specified, the function will use a default Object ID with manufacturer public key certificate. 
 
+Sample output for a XMC1100 BootKit
+```
+My Public Key Length: 68
+My Public Key:
+0x000000: 03 42 00 04 e2 32 bd 3e 4b 05 a6 f9 1d dc 84 5d .B...2.>K......]
+0x000010: 29 aa a1 5d 02 e9 ca e3 04 31 c1 c8 bc c5 4e 4a )..].....1....NJ
+0x000020: fd cb 1d 78 78 a5 c5 df b9 d0 77 c0 37 d8 8a 2b ...xx.....w.7..+
+0x000030: 7f 6f 33 66 b4 4c 4f 35 7b 90 3d 7f 72 9f 2f 53 .o3f.LO5{.=.r./S
+0x000040: 14 ff 05 59                                     ...Y            
+
+Calculate Hash ... 
+[OK] | Command executed in 68 ms
+Hash Length: 32
+Hash:
+0x000000: 53 bc c3 a1 94 52 bc cd 71 8a 48 58 fc 3e da 82 S....R..q.HX.>..
+0x000010: 30 5b 96 e2 1a 2b 3f 43 32 50 c4 32 fd 92 ac bf 0[...+?C2P.2....
+
+Generate Signature ... 
+[OK] | Command executed in 152 ms
+Signature #1 Length: 68
+Signature #1:
+0x000000: 02 20 38 0f 56 c8 90 53 18 9d 8f 58 b4 46 35 a0 . 8.V..S...X.F5.
+0x000010: d7 07 63 ef 9f a2 30 64 93 e4 3d bf 7b db 57 a1 ..c...0d..=.{.W.
+0x000020: b6 d7 02 20 4f 5e 3a db 6b 1a eb ac 66 9a 15 69 ... O^:.k...f..i
+0x000030: 0d 7d 46 5b 44 72 40 06 a5 7b 06 84 0f d7 6e 0f .}F[Dr@..{....n.
+0x000040: 4b 45 7f 50                                     KE.P            
+
+Verify Signature ... 
+[OK] | Command executed in 231 ms
+
+Calculate Hash ... 
+[OK] | Command executed in 64 ms
+Hash Length: 32
+Hash:
+0x000000: 53 bc c3 a1 94 52 bc cd 71 8a 48 58 fc 3e da 82 S....R..q.HX.>..
+0x000010: 30 5b 96 e2 1a 2b 3f 43 32 50 c4 32 fd 92 ac bf 0[...+?C2P.2....
+Generate Key Pair ... [OK] | Command executed in 114 ms
+Public key Length: 68
+Public key:
+0x000000: 03 42 00 04 f1 c0 8f 47 98 7f 67 2e 27 eb 2d 63 .B.....G..g.'.-c
+0x000010: 8d c3 50 94 0a b6 39 1c 1a d6 c6 b1 01 f1 e4 07 ..P...9.........
+0x000020: bd 6d 1d 7e d2 6b a7 4e 63 b7 5b ef cd 84 20 28 .m.~.k.Nc.[... (
+0x000030: 2d ef 8b f0 0b bd 42 5d 6e 08 14 ba 01 fc d6 58 -.....B]n......X
+0x000040: 75 13 fa 48                                     u..H            
+
+Generate Signature ... 
+[OK] | Command executed in 152 ms
+Signature #2 Length: 70
+Signature #2:
+0x000000: 02 21 00 c5 6d 74 35 bb 8f 9a 82 ff e0 07 ab 20 .!..mt5........ 
+0x000010: f2 d7 91 5c 3b 09 93 97 39 d5 53 60 a9 16 18 89 ...\;...9.S`....
+0x000020: 15 32 30 02 21 00 f3 11 f8 a2 fd d7 6b f0 59 0f .20.!.......k.Y.
+0x000030: fb ed 56 76 c7 6f d0 76 53 7b 72 72 2c 18 98 1b ..Vv.o.vS{rr,...
+0x000040: 41 38 6e b7 fb 15                               A8n...          
+
+Verify Signature ... 
+[OK] | Command executed in 230 ms
+```
+
 ### generateKeypair
 calculateSignVerifySign demonstrates methods for keypair generation, either with a private key export, or without. 
 In the latter case the developer should specify the Object ID of the private key. 
