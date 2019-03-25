@@ -31,7 +31,7 @@ The wiring to your arduino board depends on the [evaluation board](https://www.i
 ## Installation
 
 ### Integration of Library
-Please download this repository from GitHub either from the latest [release](https://github.com/Infineon/arduino-optiga-trust-x/releases) of directly [here](https://github.com/Infineon/arduino-optiga-trust-x/archive/v1.0.3.zip).
+Please download this repository from GitHub either from the latest [release](https://github.com/Infineon/arduino-optiga-trust-x/releases) or directly [here](https://github.com/Infineon/arduino-optiga-trust-x/archive/v1.0.3.zip).
 
 To install the OPTIGA&trade; Trust X library in the Arduino IDE several options can be taken:
 1. via [Library Manager](https://www.arduino.cc/en/Guide/Libraries#toc3) you can find and control this library. Simply type in the Search Field **OPTIGATrustX**
