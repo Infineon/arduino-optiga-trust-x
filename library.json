@@ -1,0 +1,17 @@
+{
+    "name": "arduino-optiga-trust-x",
+    "keywords": "security, trust-x, sensor2go, ECDSA, DTLS, ECC256, AES128, SHA-256, TRNG, DRNG",
+    "description": "This library allows you to communicate with Optiga Trust X", 
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/Infineon/arduino-optiga-trust-x.git",
+      "branch": "master"
+    },
+    "version":"1.0.5",
+    "frameworks": "arduino",
+    "platforms": [
+        "infineonxmc",
+        "atmelavr"
+    ]
+  }

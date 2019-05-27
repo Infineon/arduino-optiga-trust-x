@@ -1,4 +1,7 @@
 # Infineon OPTIGA&trade; Trust X Arduino library
+
+[![Build Status](https://travis-ci.org/Infineon/arduino-optiga-trust-x.svg?branch=master)](https://travis-ci.org/Infineon/arduino-optiga-trust-x)
+
 ![TrustXPackage](https://github.com/Infineon/Assets/raw/master/Pictures/OPTIGA-Trust-X.png)
 
 Infineon's [OPTIGA&trade; Trust X](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-trust/optiga-trust-x-sls-32aia/) security solution library for Arduino
