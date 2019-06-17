@@ -340,10 +340,11 @@ public:
      * assume you don't need various parts of this input as you use internally stored values
      * #1 sharedSecret(p_pubkey) - Private Key is taken from the first private keys slot. NISTP256 Curve is used
      * #2 sharedSecret(priv_oid, p_pubkey) - Works like #1, but you can specifiy which slot to use.
-     * #3 sharedSecret(curve_type, p_pubkey) - Works like #1, but you can define a curve type: "secp256r1" or "secp384r1"
-     * #4 sharedSecret(curve_type, priv_oid, p_pubkey) - Works like #2, but you can define a curve type: "secp256r1" or "secp384r1"
-     * #5 sharedSecretWithExport(p_pubkey, p_out) - Works like #1, but exports the result in p_out
-     * #6 sharedSecretWithExport(curve_type, p_pubkey, p_out) - Works like #5, but additionally you can define curve type of the publick key
+     * #3 sharedSecret(priv_oid, ssec_oid, p_pubkey) - Works like #1, but you can specifiy which slot to use for the private key and for the shared secret.
+     * #4 sharedSecret(curve_type, p_pubkey) - Works like #1, but you can define a curve type: "secp256r1" or "secp384r1"
+     * #5 sharedSecret(curve_type, priv_oid, p_pubkey) - Works like #2, but you can define a curve type: "secp256r1" or "secp384r1"
+     * #6 sharedSecretWithExport(p_pubkey, p_out) - Works like #1, but exports the result in p_out
+     * #7 sharedSecretWithExport(curve_type, p_pubkey, p_out) - Works like #5, but additionally you can define curve type of the publick key
      *
      * This Shared secret can be used until the Session Context will be flashed, either after an application restart or a reset
      * @param[in] curveName         Curve name. The following are supported:
@@ -369,6 +370,9 @@ public:
 	}
     int32_t sharedSecret(uint16_t oid, uint8_t publicKey[], uint16_t plen) {
 		return calculateSharedSecretGeneric(0x03, oid, publicKey, plen, oid);
+	}
+    int32_t sharedSecret(uint16_t in_oid, uint16_t out_oid, uint8_t publicKey[], uint16_t plen) {
+		return calculateSharedSecretGeneric(0x03, in_oid, publicKey, plen, out_oid);
 	}
     int32_t sharedSecret(String curveName, uint8_t publicKey[], uint16_t plen) {
 		return calculateSharedSecretGeneric(str2cur(curveName),eSESSION_ID_2, publicKey, plen, eSESSION_ID_2);
